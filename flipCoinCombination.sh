@@ -1,26 +1,65 @@
 #!/bin/bash -x
-hcount=0
-tcount=0
 totalflip=200
+hh=0
+tt=0
+ht=0
+th=0
 for((i=1;i<=$totalflip;i++))
 do
-flip=$((RANDOM%2))
-if [ $flip -eq 1 ];then
-let hcount++
-else
-let tcount++
+coin1flip=$((RANDOM%2))
+coin2flip=$((RANDOM%2))
+
+if [ $coin1flip -eq 1 ] && [ $coin2flip -eq 1 ]
+then
+let hh++
+
+elif [ $coin1flip -eq 0 ] && [ $coin2flip -eq 0 ]
+then
+let tt++
+
+elif [ $coin1flip -eq 1 ] && [ $coin2flip -eq 0 ]
+then
+let ht++
+
+elif [ $coin1flip -eq 0 ] && [ $coin2flip -eq 1 ]
+then
+let th++
+
 fi
 done
 
 declare -A dr
 
-dr[head]=$hcount
-dr[tail]=$tcount
+dr[hh]=$hh
+dr[tt]=$tt
+dr[ht]=$ht
+dr[th]=$th
 
-echo "${dr[@]}"
+echo ${dr[@]}
 
-headpr=`echo $hcount $totalflip | awk '{a=$1/$2*100} {print a}'`
-echo "head percentage $headpr %"
+prhh=`echo $hh $totalflip | awk '{a=$1/$2*100} {print a}'`
+prtt=`echo $tt $totalflip | awk '{a=$1/$2*100} {print a}'`
+prht=`echo $ht $totalflip | awk '{a=$1/$2*100} {print a}'`
+prth=`echo $th $totalflip | awk '{a=$1/$2*100} {print a}'`
 
-tailpr=`echo $tcount $totalflip | awk '{b=$1/$2*100} {print b}'`
-echo "tail percentage $tailpr %"
+echo "percentage of hh combination is $prhh"
+echo "percentage of tt combination is $prtt"
+echo "percentage of ht combination is $prht"
+echo "percentage of th combination is $prth"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
